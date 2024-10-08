@@ -26,6 +26,8 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+note.py
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
