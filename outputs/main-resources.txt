@@ -1,6 +1,5 @@
 # main\resources\application.properties
 ```
-spring.application.name=app
-
+spring.application.name=life-protocol
 ```
 
