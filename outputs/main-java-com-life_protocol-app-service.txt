@@ -1,0 +1,151 @@
+# main\java\com\life_protocol\app\service\CategoryService.java
+```
+package com.life_protocol.app.service;
+
+import com.life_protocol.app.model.Category;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface CategoryService {
+    Category createCategory(Category category);
+    Optional<Category> getCategoryById(Long id);
+    Optional<Category> getCategoryByName(String name);
+    List<Category> getAllCategories();
+    Category updateCategory(Category category);
+    void deleteCategory(Long id);
+}
+```
+
+# main\java\com\life_protocol\app\service\CategoryServiceImpl.java
+```
+package com.life_protocol.app.service;
+
+import com.life_protocol.app.model.Category;
+import com.life_protocol.app.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class CategoryServiceImpl implements CategoryService {
+
+    private final CategoryRepository categoryRepository;
+
+    @Autowired
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
+    @Override
+    public Category createCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public Optional<Category> getCategoryById(Long id) {
+        return categoryRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Category> getCategoryByName(String name) {
+        return categoryRepository.findByName(name);
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    public Category updateCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
+    }
+
+}
+```
+
+# main\java\com\life_protocol\app\service\GoalService.java
+```
+package com.life_protocol.app.service;
+
+import com.life_protocol.app.model.Goal;
+import java.util.List;
+import java.util.Optional;
+
+public interface GoalService {
+    Goal createGoal(Goal goal);
+    Optional<Goal> getGoalById(Long id);
+    List<Goal> getAllGoals();
+    Goal updateGoal(Goal goal);
+    void deleteGoal(Long id);
+    List<Goal> getActiveGoals();
+}
+```
+
+# main\java\com\life_protocol\app\service\GoalServiceImpl.java
+```
+package com.life_protocol.app.service;
+
+import com.life_protocol.app.model.Goal;
+import com.life_protocol.app.repository.GoalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+public class GoalServiceImpl implements GoalService {
+
+    private final GoalRepository goalRepository;
+
+    @Autowired
+    public GoalServiceImpl(GoalRepository goalRepository) {
+        this.goalRepository = goalRepository;
+    }
+
+    @Override
+    public Goal createGoal(Goal goal) {
+        return goalRepository.save(goal);
+    }
+
+    @Override
+    public Optional<Goal> getGoalById(Long id) {
+        return goalRepository.findById(id);
+    }
+
+    @Override
+    public List<Goal> getAllGoals() {
+        return goalRepository.findAll();
+    }
+
+    @Override
+    public Goal updateGoal(Goal goal) {
+        return goalRepository.save(goal);
+    }
+
+    @Override
+    public void deleteGoal(Long id) {
+        goalRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Goal> getActiveGoals() {
+        LocalDate now = LocalDate.now();
+        return goalRepository.findAll().stream()
+                .filter(goal -> !goal.isCompleted() &&
+                        !goal.getEndDate().isBefore(now))
+                .collect(Collectors.toList());
+    }
+}
+```
+
