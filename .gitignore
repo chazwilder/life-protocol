@@ -27,6 +27,7 @@ out/
 !**/src/test/**/out/
 
 note.py
+.env
 
 ### NetBeans ###
 /nbproject/private/

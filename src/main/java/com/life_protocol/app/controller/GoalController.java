@@ -27,7 +27,7 @@ public class GoalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Goal> getGoalById(@PathVariable Long id) {
+    public ResponseEntity<Goal> getGoalById(@PathVariable String id) {
         return goalService.getGoalById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -39,7 +39,7 @@ public class GoalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Goal> updateGoal(@PathVariable Long id, @RequestBody Goal goal) {
+    public ResponseEntity<Goal> updateGoal(@PathVariable String id, @RequestBody Goal goal) {
         if (!id.equals(goal.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -48,7 +48,7 @@ public class GoalController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGoal(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteGoal(@PathVariable String id) {
         goalService.deleteGoal(id);
         return ResponseEntity.noContent().build();
     }

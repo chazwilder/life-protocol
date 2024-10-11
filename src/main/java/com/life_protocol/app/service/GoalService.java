@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface GoalService {
     Goal createGoal(Goal goal);
-    Optional<Goal> getGoalById(Long id);
+    Optional<Goal> getGoalById(String id);
     List<Goal> getAllGoals();
     Goal updateGoal(Goal goal);
-    void deleteGoal(Long id);
+    void deleteGoal(String id);
     List<Goal> getActiveGoals();
 }

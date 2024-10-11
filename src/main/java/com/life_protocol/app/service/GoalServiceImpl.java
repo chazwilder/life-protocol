@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class GoalServiceImpl implements GoalService {
@@ -26,7 +25,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public Optional<Goal> getGoalById(Long id) {
+    public Optional<Goal> getGoalById(String id) {
         return goalRepository.findById(id);
     }
 
@@ -41,16 +40,13 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public void deleteGoal(Long id) {
+    public void deleteGoal(String id) {
         goalRepository.deleteById(id);
     }
 
     @Override
     public List<Goal> getActiveGoals() {
         LocalDate now = LocalDate.now();
-        return goalRepository.findAll().stream()
-                .filter(goal -> !goal.isCompleted() &&
-                        !goal.getEndDate().isBefore(now))
-                .collect(Collectors.toList());
+        return goalRepository.findByCompletedFalseAndEndDateAfter(now);
     }
 }
