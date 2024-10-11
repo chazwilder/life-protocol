@@ -29,7 +29,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable String id) {
         return categoryService.getCategoryById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -41,7 +41,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable String id, @RequestBody Category category) {
         if (!id.equals(category.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -49,7 +49,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
@@ -94,7 +94,7 @@ public class GoalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Goal> getGoalById(@PathVariable Long id) {
+    public ResponseEntity<Goal> getGoalById(@PathVariable String id) {
         return goalService.getGoalById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -106,7 +106,7 @@ public class GoalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Goal> updateGoal(@PathVariable Long id, @RequestBody Goal goal) {
+    public ResponseEntity<Goal> updateGoal(@PathVariable String id, @RequestBody Goal goal) {
         if (!id.equals(goal.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -115,7 +115,7 @@ public class GoalController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGoal(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteGoal(@PathVariable String id) {
         goalService.deleteGoal(id);
         return ResponseEntity.noContent().build();
     }

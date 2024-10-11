@@ -1,5 +1,6 @@
 package com.life_protocol.app;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,8 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LifeProtocolApplication {
 
     public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.load();
+        System.setProperty("MONGODB_URI", dotenv.get("MONGODB_URI"));
         SpringApplication.run(LifeProtocolApplication.class, args);
         System.out.println("Welcome to Life Protocol!");
     }
-
 }
