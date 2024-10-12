@@ -8,18 +8,16 @@ import java.time.LocalDateTime;
 public class AIAdvice {
     @Id
     private String id;
-
     private String userId;
-    private String category; // e.g., "Fitness", "Nutrition", "Productivity"
+    private String category;
     private String advice;
     private LocalDateTime generatedAt;
     private boolean isRead;
     private boolean isImplemented;
     private LocalDateTime implementedAt;
-    private int userRating; // 1-5 star rating from the user
+    private int userRating;
     private String userFeedback;
 
-    // Constructors
     public AIAdvice() {}
 
     public AIAdvice(String userId, String category, String advice) {
@@ -31,7 +29,6 @@ public class AIAdvice {
         this.isImplemented = false;
     }
 
-    // Getters and setters
     public String getId() {
         return id;
     }
@@ -86,13 +83,14 @@ public class AIAdvice {
 
     public void setImplemented(boolean implemented) {
         isImplemented = implemented;
-        if (implemented) {
-            this.implementedAt = LocalDateTime.now();
-        }
     }
 
     public LocalDateTime getImplementedAt() {
         return implementedAt;
+    }
+
+    public void setImplementedAt(LocalDateTime implementedAt) {
+        this.implementedAt = implementedAt;
     }
 
     public int getUserRating() {

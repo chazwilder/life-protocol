@@ -21,6 +21,7 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     public Goal createGoal(Goal goal) {
+        // Add any validation or business logic here
         return goalRepository.save(goal);
     }
 
@@ -30,8 +31,18 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public List<Goal> getAllGoals() {
-        return goalRepository.findAll();
+    public List<Goal> getGoalsByUserId(String userId) {
+        return goalRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<Goal> getActiveGoalsByUserId(String userId) {
+        return goalRepository.findByUserIdAndCompleted(userId, false);
+    }
+
+    @Override
+    public List<Goal> getGoalsByUserIdAndDateRange(String userId, LocalDate startDate, LocalDate endDate) {
+        return goalRepository.findByUserIdAndStartDateBeforeAndEndDateAfter(userId, startDate, endDate);
     }
 
     @Override
@@ -45,8 +56,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public List<Goal> getActiveGoals() {
-        LocalDate now = LocalDate.now();
-        return goalRepository.findByCompletedFalseAndEndDateAfter(now);
+    public List<Goal> getCompletedGoalsByUserId(String userId) {
+        return goalRepository.findByUserIdAndCompleted(userId, true);
     }
 }

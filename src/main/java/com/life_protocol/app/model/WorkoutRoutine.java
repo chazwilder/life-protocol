@@ -15,22 +15,58 @@ public class WorkoutRoutine {
     private String description;
     private List<WorkoutExercise> exercises;
     private int estimatedDurationMinutes;
-    private String difficultyLevel; // e.g., "Beginner", "Intermediate", "Advanced"
+    private String difficultyLevel;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Inner class to represent exercises in the routine
     public static class WorkoutExercise {
         private String exerciseId;
         private int sets;
         private int repsPerSet;
-        private int durationSeconds; // For timed exercises
+        private int durationSeconds;
 
-        // Constructors, getters, and setters for WorkoutExercise
-        // ...
+        public WorkoutExercise() {}
+
+        public WorkoutExercise(String exerciseId, int sets, int repsPerSet, int durationSeconds) {
+            this.exerciseId = exerciseId;
+            this.sets = sets;
+            this.repsPerSet = repsPerSet;
+            this.durationSeconds = durationSeconds;
+        }
+
+        public String getExerciseId() {
+            return exerciseId;
+        }
+
+        public void setExerciseId(String exerciseId) {
+            this.exerciseId = exerciseId;
+        }
+
+        public int getSets() {
+            return sets;
+        }
+
+        public void setSets(int sets) {
+            this.sets = sets;
+        }
+
+        public int getRepsPerSet() {
+            return repsPerSet;
+        }
+
+        public void setRepsPerSet(int repsPerSet) {
+            this.repsPerSet = repsPerSet;
+        }
+
+        public int getDurationSeconds() {
+            return durationSeconds;
+        }
+
+        public void setDurationSeconds(int durationSeconds) {
+            this.durationSeconds = durationSeconds;
+        }
     }
 
-    // Constructors
     public WorkoutRoutine() {}
 
     public WorkoutRoutine(String userId, String name, String description, List<WorkoutExercise> exercises, int estimatedDurationMinutes, String difficultyLevel) {
@@ -44,7 +80,6 @@ public class WorkoutRoutine {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // Getters and setters
     public String getId() {
         return id;
     }
@@ -115,20 +150,5 @@ public class WorkoutRoutine {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "WorkoutRoutine{" +
-                "id='" + id + '\'' +
-                ", userId='" + userId + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", exercises=" + exercises +
-                ", estimatedDurationMinutes=" + estimatedDurationMinutes +
-                ", difficultyLevel='" + difficultyLevel + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }
