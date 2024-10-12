@@ -20,6 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category createCategory(Category category) {
+        // You might want to add validation or business logic here
         return categoryRepository.save(category);
     }
 
@@ -39,6 +40,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> searchCategories(String namePattern) {
+        return categoryRepository.findByNameContainingIgnoreCase(namePattern);
+    }
+
+    @Override
     public Category updateCategory(Category category) {
         return categoryRepository.save(category);
     }
@@ -46,5 +52,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(String id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return categoryRepository.existsByName(name);
     }
 }
