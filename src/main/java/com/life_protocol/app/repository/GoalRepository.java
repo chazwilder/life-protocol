@@ -9,5 +9,8 @@ import java.util.List;
 
 @Repository
 public interface GoalRepository extends MongoRepository<Goal, String> {
-    List<Goal> findByCompletedFalseAndEndDateAfter(LocalDate date);
+    List<Goal> findByUserId(String userId);
+    List<Goal> findByUserIdAndCompleted(String userId, boolean completed);
+    List<Goal> findByUserIdAndEndDateAfter(String userId, LocalDate date);
+    List<Goal> findByUserIdAndStartDateBeforeAndEndDateAfter(String userId, LocalDate startDate, LocalDate endDate);
 }
