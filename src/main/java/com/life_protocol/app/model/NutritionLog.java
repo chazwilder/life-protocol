@@ -4,12 +4,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Document(collection = "nutrition_logs")
 public class NutritionLog {
     @Id
     private String id;
-
     private String userId;
     private LocalDateTime date;
     private List<MealEntry> meals;
@@ -21,19 +21,67 @@ public class NutritionLog {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // Inner class to represent individual meal entries
     public static class MealEntry {
+        private String id;
         private String foodId;
-        private String mealType; // e.g., "Breakfast", "Lunch", "Dinner", "Snack"
+        private String mealType;
         private double quantity;
         private String quantityUnit;
         private LocalDateTime consumedAt;
 
-        // Constructors, getters, and setters for MealEntry
-        // ...
+        public MealEntry() {
+            this.id = UUID.randomUUID().toString();
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getFoodId() {
+            return foodId;
+        }
+
+        public void setFoodId(String foodId) {
+            this.foodId = foodId;
+        }
+
+        public String getMealType() {
+            return mealType;
+        }
+
+        public void setMealType(String mealType) {
+            this.mealType = mealType;
+        }
+
+        public double getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(double quantity) {
+            this.quantity = quantity;
+        }
+
+        public String getQuantityUnit() {
+            return quantityUnit;
+        }
+
+        public void setQuantityUnit(String quantityUnit) {
+            this.quantityUnit = quantityUnit;
+        }
+
+        public LocalDateTime getConsumedAt() {
+            return consumedAt;
+        }
+
+        public void setConsumedAt(LocalDateTime consumedAt) {
+            this.consumedAt = consumedAt;
+        }
     }
 
-    // Constructors
     public NutritionLog() {}
 
     public NutritionLog(String userId, LocalDateTime date, List<MealEntry> meals) {
@@ -45,7 +93,6 @@ public class NutritionLog {
         calculateTotals();
     }
 
-    // Getters and setters
     public String getId() {
         return id;
     }
@@ -115,10 +162,7 @@ public class NutritionLog {
         this.updatedAt = updatedAt;
     }
 
-    // Method to calculate totals based on meal entries
-    private void calculateTotals() {
-        // Implementation depends on how you store nutritional info for each food item
-        // This is a placeholder for the actual calculation logic
+    public void calculateTotals() {
     }
 
     @Override
