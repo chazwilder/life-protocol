@@ -28,6 +28,7 @@ out/
 
 note.py
 .env
+outputs
 
 ### NetBeans ###
 /nbproject/private/
