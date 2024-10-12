@@ -34,8 +34,9 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+    public ResponseEntity<List<Category>> getAllCategories() {
+        List<Category> categories = categoryService.getAllCategories();
+        return ResponseEntity.ok(categories);
     }
 
     @PutMapping("/{id}")
@@ -43,7 +44,8 @@ public class CategoryController {
         if (!id.equals(category.getId())) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(categoryService.updateCategory(category));
+        Category updatedCategory = categoryService.updateCategory(category);
+        return ResponseEntity.ok(updatedCategory);
     }
 
     @DeleteMapping("/{id}")
@@ -57,5 +59,11 @@ public class CategoryController {
         return categoryService.getCategoryByName(name)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Category>> searchCategories(@RequestParam String namePattern) {
+        List<Category> categories = categoryService.searchCategories(namePattern);
+        return ResponseEntity.ok(categories);
     }
 }

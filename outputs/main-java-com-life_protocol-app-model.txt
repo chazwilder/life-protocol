@@ -1,3 +1,249 @@
+# main\java\com\life_protocol\app\model\Achievement.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+
+@Document(collection = "achievements")
+public class Achievement {
+    @Id
+    private String id;
+
+    private String name;
+    private String description;
+    private int experiencePoints;
+    private String badgeImageUrl;
+    private String category;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    // Constructors
+    public Achievement() {}
+
+    public Achievement(String name, String description, int experiencePoints, String badgeImageUrl, String category) {
+        this.name = name;
+        this.description = description;
+        this.experiencePoints = experiencePoints;
+        this.badgeImageUrl = badgeImageUrl;
+        this.category = category;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getExperiencePoints() {
+        return experiencePoints;
+    }
+
+    public void setExperiencePoints(int experiencePoints) {
+        this.experiencePoints = experiencePoints;
+    }
+
+    public String getBadgeImageUrl() {
+        return badgeImageUrl;
+    }
+
+    public void setBadgeImageUrl(String badgeImageUrl) {
+        this.badgeImageUrl = badgeImageUrl;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Achievement{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", experiencePoints=" + experiencePoints +
+                ", badgeImageUrl='" + badgeImageUrl + '\'' +
+                ", category='" + category + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\AIAdvice.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+
+@Document(collection = "ai_advice")
+public class AIAdvice {
+    @Id
+    private String id;
+    private String userId;
+    private String category;
+    private String advice;
+    private LocalDateTime generatedAt;
+    private boolean isRead;
+    private boolean isImplemented;
+    private LocalDateTime implementedAt;
+    private int userRating;
+    private String userFeedback;
+
+    public AIAdvice() {}
+
+    public AIAdvice(String userId, String category, String advice) {
+        this.userId = userId;
+        this.category = category;
+        this.advice = advice;
+        this.generatedAt = LocalDateTime.now();
+        this.isRead = false;
+        this.isImplemented = false;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getAdvice() {
+        return advice;
+    }
+
+    public void setAdvice(String advice) {
+        this.advice = advice;
+    }
+
+    public LocalDateTime getGeneratedAt() {
+        return generatedAt;
+    }
+
+    public void setGeneratedAt(LocalDateTime generatedAt) {
+        this.generatedAt = generatedAt;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
+    public boolean isImplemented() {
+        return isImplemented;
+    }
+
+    public void setImplemented(boolean implemented) {
+        isImplemented = implemented;
+    }
+
+    public LocalDateTime getImplementedAt() {
+        return implementedAt;
+    }
+
+    public void setImplementedAt(LocalDateTime implementedAt) {
+        this.implementedAt = implementedAt;
+    }
+
+    public int getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(int userRating) {
+        this.userRating = userRating;
+    }
+
+    public String getUserFeedback() {
+        return userFeedback;
+    }
+
+    public void setUserFeedback(String userFeedback) {
+        this.userFeedback = userFeedback;
+    }
+
+    @Override
+    public String toString() {
+        return "AIAdvice{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", category='" + category + '\'' +
+                ", advice='" + advice + '\'' +
+                ", generatedAt=" + generatedAt +
+                ", isRead=" + isRead +
+                ", isImplemented=" + isImplemented +
+                ", implementedAt=" + implementedAt +
+                ", userRating=" + userRating +
+                ", userFeedback='" + userFeedback + '\'' +
+                '}';
+    }
+}
+```
+
 # main\java\com\life_protocol\app\model\Category.java
 ```
 package com.life_protocol.app.model;
@@ -53,6 +299,293 @@ public class Category {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\Exercise.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+
+@Document(collection = "exercises")
+public class Exercise {
+    @Id
+    private String id;
+
+    private String name;
+    private String description;
+    private String category; // e.g., "Strength", "Cardio", "Flexibility"
+    private String muscleGroup; // e.g., "Chest", "Legs", "Back"
+    private String equipmentNeeded;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    // Constructors
+    public Exercise() {}
+
+    public Exercise(String name, String description, String category, String muscleGroup, String equipmentNeeded) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.muscleGroup = muscleGroup;
+        this.equipmentNeeded = equipmentNeeded;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getMuscleGroup() {
+        return muscleGroup;
+    }
+
+    public void setMuscleGroup(String muscleGroup) {
+        this.muscleGroup = muscleGroup;
+    }
+
+    public String getEquipmentNeeded() {
+        return equipmentNeeded;
+    }
+
+    public void setEquipmentNeeded(String equipmentNeeded) {
+        this.equipmentNeeded = equipmentNeeded;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
+                ", muscleGroup='" + muscleGroup + '\'' +
+                ", equipmentNeeded='" + equipmentNeeded + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\Food.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+
+@Document(collection = "foods")
+public class Food {
+    @Id
+    private String id;
+
+    private String name;
+    private String brand;
+    private double servingSize;
+    private String servingUnit; // e.g., "g", "ml", "oz"
+    private double calories;
+    private double protein;
+    private double carbohydrates;
+    private double fat;
+    private double fiber;
+    private String category; // e.g., "Fruits", "Vegetables", "Grains"
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    // Constructors
+    public Food() {}
+
+    public Food(String name, String brand, double servingSize, String servingUnit,
+                double calories, double protein, double carbohydrates, double fat,
+                double fiber, String category) {
+        this.name = name;
+        this.brand = brand;
+        this.servingSize = servingSize;
+        this.servingUnit = servingUnit;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbohydrates = carbohydrates;
+        this.fat = fat;
+        this.fiber = fiber;
+        this.category = category;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public double getServingSize() {
+        return servingSize;
+    }
+
+    public void setServingSize(double servingSize) {
+        this.servingSize = servingSize;
+    }
+
+    public String getServingUnit() {
+        return servingUnit;
+    }
+
+    public void setServingUnit(String servingUnit) {
+        this.servingUnit = servingUnit;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
+    }
+
+    public double getProtein() {
+        return protein;
+    }
+
+    public void setProtein(double protein) {
+        this.protein = protein;
+    }
+
+    public double getCarbohydrates() {
+        return carbohydrates;
+    }
+
+    public void setCarbohydrates(double carbohydrates) {
+        this.carbohydrates = carbohydrates;
+    }
+
+    public double getFat() {
+        return fat;
+    }
+
+    public void setFat(double fat) {
+        this.fat = fat;
+    }
+
+    public double getFiber() {
+        return fiber;
+    }
+
+    public void setFiber(double fiber) {
+        this.fiber = fiber;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", servingSize=" + servingSize +
+                ", servingUnit='" + servingUnit + '\'' +
+                ", calories=" + calories +
+                ", protein=" + protein +
+                ", carbohydrates=" + carbohydrates +
+                ", fat=" + fat +
+                ", fiber=" + fiber +
+                ", category='" + category + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }
@@ -150,6 +683,1107 @@ public class Goal {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", completed=" + completed +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\NutritionLog.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+@Document(collection = "nutrition_logs")
+public class NutritionLog {
+    @Id
+    private String id;
+    private String userId;
+    private LocalDateTime date;
+    private List<MealEntry> meals;
+    private double totalCalories;
+    private double totalProtein;
+    private double totalCarbohydrates;
+    private double totalFat;
+    private double totalFiber;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public static class MealEntry {
+        private String id;
+        private String foodId;
+        private String mealType;
+        private double quantity;
+        private String quantityUnit;
+        private LocalDateTime consumedAt;
+
+        public MealEntry() {
+            this.id = UUID.randomUUID().toString();
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getFoodId() {
+            return foodId;
+        }
+
+        public void setFoodId(String foodId) {
+            this.foodId = foodId;
+        }
+
+        public String getMealType() {
+            return mealType;
+        }
+
+        public void setMealType(String mealType) {
+            this.mealType = mealType;
+        }
+
+        public double getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(double quantity) {
+            this.quantity = quantity;
+        }
+
+        public String getQuantityUnit() {
+            return quantityUnit;
+        }
+
+        public void setQuantityUnit(String quantityUnit) {
+            this.quantityUnit = quantityUnit;
+        }
+
+        public LocalDateTime getConsumedAt() {
+            return consumedAt;
+        }
+
+        public void setConsumedAt(LocalDateTime consumedAt) {
+            this.consumedAt = consumedAt;
+        }
+    }
+
+    public NutritionLog() {}
+
+    public NutritionLog(String userId, LocalDateTime date, List<MealEntry> meals) {
+        this.userId = userId;
+        this.date = date;
+        this.meals = meals;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        calculateTotals();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public List<MealEntry> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(List<MealEntry> meals) {
+        this.meals = meals;
+        calculateTotals();
+    }
+
+    public double getTotalCalories() {
+        return totalCalories;
+    }
+
+    public double getTotalProtein() {
+        return totalProtein;
+    }
+
+    public double getTotalCarbohydrates() {
+        return totalCarbohydrates;
+    }
+
+    public double getTotalFat() {
+        return totalFat;
+    }
+
+    public double getTotalFiber() {
+        return totalFiber;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void calculateTotals() {
+    }
+
+    @Override
+    public String toString() {
+        return "NutritionLog{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", date=" + date +
+                ", meals=" + meals +
+                ", totalCalories=" + totalCalories +
+                ", totalProtein=" + totalProtein +
+                ", totalCarbohydrates=" + totalCarbohydrates +
+                ", totalFat=" + totalFat +
+                ", totalFiber=" + totalFiber +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\Protocol.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+
+@Document(collection = "protocols")
+public class Protocol {
+    @Id
+    private String id;
+
+    private String title;
+    private String description;
+    private String userId;
+    private String goalId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private boolean isCompleted;
+    private int frequency; // e.g., daily = 1, weekly = 7
+    private LocalDateTime nextDueDate;
+
+    // Constructors
+    public Protocol() {}
+
+    public Protocol(String title, String description, String userId, String goalId, int frequency) {
+        this.title = title;
+        this.description = description;
+        this.userId = userId;
+        this.goalId = goalId;
+        this.frequency = frequency;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.isCompleted = false;
+        this.nextDueDate = LocalDateTime.now().plusDays(frequency);
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getGoalId() {
+        return goalId;
+    }
+
+    public void setGoalId(String goalId) {
+        this.goalId = goalId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
+
+    public LocalDateTime getNextDueDate() {
+        return nextDueDate;
+    }
+
+    public void setNextDueDate(LocalDateTime nextDueDate) {
+        this.nextDueDate = nextDueDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Protocol{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", userId='" + userId + '\'' +
+                ", goalId='" + goalId + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", isCompleted=" + isCompleted +
+                ", frequency=" + frequency +
+                ", nextDueDate=" + nextDueDate +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\Subtask.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+
+@Document(collection = "subtasks")
+public class Subtask {
+    @Id
+    private String id;
+
+    private String title;
+    private String description;
+    private String protocolId;
+    private boolean isCompleted;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime completedAt;
+
+    // Constructors
+    public Subtask() {}
+
+    public Subtask(String title, String description, String protocolId) {
+        this.title = title;
+        this.description = description;
+        this.protocolId = protocolId;
+        this.isCompleted = false;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getProtocolId() {
+        return protocolId;
+    }
+
+    public void setProtocolId(String protocolId) {
+        this.protocolId = protocolId;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+        if (completed) {
+            this.completedAt = LocalDateTime.now();
+        } else {
+            this.completedAt = null;
+        }
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Subtask{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", protocolId='" + protocolId + '\'' +
+                ", isCompleted=" + isCompleted +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", completedAt=" + completedAt +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\User.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
+import java.time.LocalDateTime;
+
+@Document(collection = "users")
+public class User {
+    @Id
+    private String id;
+
+    @Indexed(unique = true)
+    private String username;
+
+    private String password;
+
+    @Indexed(unique = true)
+    private String email;
+
+    private String firstName;
+    private String lastName;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastLogin;
+
+    // Constructors
+    public User() {}
+
+    public User(String username, String email, String firstName, String lastName) {
+        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", createdAt=" + createdAt +
+                ", lastLogin=" + lastLogin +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\UserGameStats.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+
+@Document(collection = "user_game_stats")
+public class UserGameStats {
+    @Id
+    private String id;
+
+    private String userId;
+    private int healthPoints;
+    private int experiencePoints;
+    private int level;
+    private int streak;
+    private LocalDateTime lastLogin;
+    private LocalDateTime updatedAt;
+
+    // Constructors
+    public UserGameStats() {}
+
+    public UserGameStats(String userId) {
+        this.userId = userId;
+        this.healthPoints = 100;  // Starting HP
+        this.experiencePoints = 0;
+        this.level = 1;
+        this.streak = 0;
+        this.lastLogin = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
+    }
+
+    public int getExperiencePoints() {
+        return experiencePoints;
+    }
+
+    public void setExperiencePoints(int experiencePoints) {
+        this.experiencePoints = experiencePoints;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getStreak() {
+        return streak;
+    }
+
+    public void setStreak(int streak) {
+        this.streak = streak;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "UserGameStats{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", healthPoints=" + healthPoints +
+                ", experiencePoints=" + experiencePoints +
+                ", level=" + level +
+                ", streak=" + streak +
+                ", lastLogin=" + lastLogin +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\Workout.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Document(collection = "workouts")
+public class Workout {
+    @Id
+    private String id;
+
+    private String userId;
+    private String name;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private int durationMinutes;
+    private List<String> exerciseIds;
+    private String notes;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    // Constructors
+    public Workout() {}
+
+    public Workout(String userId, String name, LocalDateTime startTime, LocalDateTime endTime, List<String> exerciseIds) {
+        this.userId = userId;
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.durationMinutes = (int) java.time.Duration.between(startTime, endTime).toMinutes();
+        this.exerciseIds = exerciseIds;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+        updateDuration();
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+        updateDuration();
+    }
+
+    public int getDurationMinutes() {
+        return durationMinutes;
+    }
+
+    public List<String> getExerciseIds() {
+        return exerciseIds;
+    }
+
+    public void setExerciseIds(List<String> exerciseIds) {
+        this.exerciseIds = exerciseIds;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    private void updateDuration() {
+        if (startTime != null && endTime != null) {
+            this.durationMinutes = (int) java.time.Duration.between(startTime, endTime).toMinutes();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Workout{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", durationMinutes=" + durationMinutes +
+                ", exerciseIds=" + exerciseIds +
+                ", notes='" + notes + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\WorkoutRoutine.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Document(collection = "workout_routines")
+public class WorkoutRoutine {
+    @Id
+    private String id;
+
+    private String userId;
+    private String name;
+    private String description;
+    private List<WorkoutExercise> exercises;
+    private int estimatedDurationMinutes;
+    private String difficultyLevel;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public static class WorkoutExercise {
+        private String exerciseId;
+        private int sets;
+        private int repsPerSet;
+        private int durationSeconds;
+
+        public WorkoutExercise() {}
+
+        public WorkoutExercise(String exerciseId, int sets, int repsPerSet, int durationSeconds) {
+            this.exerciseId = exerciseId;
+            this.sets = sets;
+            this.repsPerSet = repsPerSet;
+            this.durationSeconds = durationSeconds;
+        }
+
+        public String getExerciseId() {
+            return exerciseId;
+        }
+
+        public void setExerciseId(String exerciseId) {
+            this.exerciseId = exerciseId;
+        }
+
+        public int getSets() {
+            return sets;
+        }
+
+        public void setSets(int sets) {
+            this.sets = sets;
+        }
+
+        public int getRepsPerSet() {
+            return repsPerSet;
+        }
+
+        public void setRepsPerSet(int repsPerSet) {
+            this.repsPerSet = repsPerSet;
+        }
+
+        public int getDurationSeconds() {
+            return durationSeconds;
+        }
+
+        public void setDurationSeconds(int durationSeconds) {
+            this.durationSeconds = durationSeconds;
+        }
+    }
+
+    public WorkoutRoutine() {}
+
+    public WorkoutRoutine(String userId, String name, String description, List<WorkoutExercise> exercises, int estimatedDurationMinutes, String difficultyLevel) {
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.exercises = exercises;
+        this.estimatedDurationMinutes = estimatedDurationMinutes;
+        this.difficultyLevel = difficultyLevel;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<WorkoutExercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(List<WorkoutExercise> exercises) {
+        this.exercises = exercises;
+    }
+
+    public int getEstimatedDurationMinutes() {
+        return estimatedDurationMinutes;
+    }
+
+    public void setEstimatedDurationMinutes(int estimatedDurationMinutes) {
+        this.estimatedDurationMinutes = estimatedDurationMinutes;
+    }
+
+    public String getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(String difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+}
+```
+
+# main\java\com\life_protocol\app\model\WorkoutSet.java
+```
+package com.life_protocol.app.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+
+@Document(collection = "workout_sets")
+public class WorkoutSet {
+    @Id
+    private String id;
+
+    private String workoutId;
+    private String exerciseId;
+    private int setNumber;
+    private int reps;
+    private double weight; // in kg
+    private int durationSeconds; // for timed exercises
+    private LocalDateTime completedAt;
+    private String notes;
+
+    // Constructors
+    public WorkoutSet() {}
+
+    public WorkoutSet(String workoutId, String exerciseId, int setNumber, int reps, double weight, int durationSeconds) {
+        this.workoutId = workoutId;
+        this.exerciseId = exerciseId;
+        this.setNumber = setNumber;
+        this.reps = reps;
+        this.weight = weight;
+        this.durationSeconds = durationSeconds;
+        this.completedAt = LocalDateTime.now();
+    }
+
+    // Getters and setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getWorkoutId() {
+        return workoutId;
+    }
+
+    public void setWorkoutId(String workoutId) {
+        this.workoutId = workoutId;
+    }
+
+    public String getExerciseId() {
+        return exerciseId;
+    }
+
+    public void setExerciseId(String exerciseId) {
+        this.exerciseId = exerciseId;
+    }
+
+    public int getSetNumber() {
+        return setNumber;
+    }
+
+    public void setSetNumber(int setNumber) {
+        this.setNumber = setNumber;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public int getDurationSeconds() {
+        return durationSeconds;
+    }
+
+    public void setDurationSeconds(int durationSeconds) {
+        this.durationSeconds = durationSeconds;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    @Override
+    public String toString() {
+        return "WorkoutSet{" +
+                "id='" + id + '\'' +
+                ", workoutId='" + workoutId + '\'' +
+                ", exerciseId='" + exerciseId + '\'' +
+                ", setNumber=" + setNumber +
+                ", reps=" + reps +
+                ", weight=" + weight +
+                ", durationSeconds=" + durationSeconds +
+                ", completedAt=" + completedAt +
+                ", notes='" + notes + '\'' +
                 '}';
     }
 }
