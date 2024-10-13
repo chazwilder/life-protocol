@@ -1,0 +1,5 @@
+# .gradle\8.10.2\gc.properties
+
+```
+
+```
