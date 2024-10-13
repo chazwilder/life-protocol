@@ -1,7 +1,0 @@
-# .gradle\buildOutputCleanup\cache.properties
-
-```
-#Mon Oct 07 15:38:06 EDT 2024
-gradle.version=8.10.2
-
-```

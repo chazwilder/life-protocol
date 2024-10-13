@@ -1,5 +1,0 @@
-# .gradle\8.10.2\dependencies-accessors\gc.properties
-
-```
-
-```

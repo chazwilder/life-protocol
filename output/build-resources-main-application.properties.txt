@@ -1,6 +1,0 @@
-# build\resources\main\application.properties
-
-```
-spring.application.name=app
-
-```
