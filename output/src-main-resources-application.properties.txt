@@ -1,0 +1,17 @@
+# src\main\resources\application.properties
+
+```
+spring.application.name=life-protocol
+
+# MongoDB configuration
+spring.data.mongodb.uri=${MONGODB_URI}
+
+# Logging configuration
+logging.level.org.springframework.data.mongodb.core.MongoTemplate=DEBUG
+
+# Server configuration
+server.port=8080
+
+app.jwtSecret=${JWT_SECRET}=
+app.jwtExpirationInMs=86400000
+```
