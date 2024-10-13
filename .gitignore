@@ -27,8 +27,12 @@ out/
 !**/src/test/**/out/
 
 note.py
+notes.py
+note_.py
+life_protocol.txt
 .env
 outputs
+/outputs/
 
 ### NetBeans ###
 /nbproject/private/
