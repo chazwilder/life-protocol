@@ -1,5 +1,0 @@
-# .gradle\vcs-1\gc.properties
-
-```
-
-```
