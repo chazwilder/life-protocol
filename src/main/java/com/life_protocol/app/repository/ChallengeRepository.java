@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ChallengeRepository extends MongoRepository<Challenge, String> {
     List<Challenge> findByCreatorId(String creatorId);
-    List<Challenge> findByParticipantsContaining(String userId);
+    List<Challenge> findByParticipantIdsContaining(String userId);
     List<Challenge> findByStartDateBeforeAndEndDateAfter(LocalDateTime now, LocalDateTime now1);
     List<Challenge> findByStatus(Challenge.ChallengeStatus status);
     List<Challenge> findByType(Challenge.ChallengeType type);
