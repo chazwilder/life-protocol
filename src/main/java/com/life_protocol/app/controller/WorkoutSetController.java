@@ -2,7 +2,11 @@ package com.life_protocol.app.controller;
 
 import com.life_protocol.app.model.WorkoutSet;
 import com.life_protocol.app.service.WorkoutSetService;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/workout-sets")
-@Api(tags = "Workout Set Management", description = "Operations pertaining to workout sets in the Life Protocol application")
+@Tag(name = "Workout Set Management", description = "Operations pertaining to workout sets in the Life Protocol application")
 public class WorkoutSetController {
 
     private final WorkoutSetService workoutSetService;
@@ -23,64 +27,64 @@ public class WorkoutSetController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Create a new workout set", response = WorkoutSet.class)
+    @Operation(summary = "Create a new workout set")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Workout set successfully created"),
-            @ApiResponse(code = 400, message = "Invalid input")
+            @ApiResponse(responseCode = "201", description = "Workout set successfully created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input")
     })
-    public ResponseEntity<WorkoutSet> createWorkoutSet(@ApiParam(value = "Workout set object to be created", required = true) @RequestBody WorkoutSet workoutSet) {
+    public ResponseEntity<WorkoutSet> createWorkoutSet(@Parameter(description = "Workout set object to be created", required = true) @RequestBody WorkoutSet workoutSet) {
         WorkoutSet createdSet = workoutSetService.createWorkoutSet(workoutSet);
         return new ResponseEntity<>(createdSet, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Get a workout set by ID", response = WorkoutSet.class)
+    @Operation(summary = "Get a workout set by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved workout set"),
-            @ApiResponse(code = 404, message = "Workout set not found")
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved workout set"),
+            @ApiResponse(responseCode = "404", description = "Workout set not found")
     })
-    public ResponseEntity<WorkoutSet> getWorkoutSetById(@ApiParam(value = "ID of the workout set to be retrieved", required = true) @PathVariable String id) {
+    public ResponseEntity<WorkoutSet> getWorkoutSetById(@Parameter(description = "ID of the workout set to be retrieved", required = true) @PathVariable String id) {
         return workoutSetService.getWorkoutSetById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/workout/{workoutId}")
-    @ApiOperation(value = "Get workout sets by workout ID", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of workout sets")
-    public ResponseEntity<List<WorkoutSet>> getWorkoutSetsByWorkoutId(@ApiParam(value = "ID of the workout", required = true) @PathVariable String workoutId) {
+    @Operation(summary = "Get workout sets by workout ID")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of workout sets")
+    public ResponseEntity<List<WorkoutSet>> getWorkoutSetsByWorkoutId(@Parameter(description = "ID of the workout", required = true) @PathVariable String workoutId) {
         List<WorkoutSet> sets = workoutSetService.getWorkoutSetsByWorkoutId(workoutId);
         return ResponseEntity.ok(sets);
     }
 
     @GetMapping("/exercise/{exerciseId}")
-    @ApiOperation(value = "Get workout sets by exercise ID", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of workout sets")
-    public ResponseEntity<List<WorkoutSet>> getWorkoutSetsByExerciseId(@ApiParam(value = "ID of the exercise", required = true) @PathVariable String exerciseId) {
+    @Operation(summary = "Get workout sets by exercise ID")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of workout sets")
+    public ResponseEntity<List<WorkoutSet>> getWorkoutSetsByExerciseId(@Parameter(description = "ID of the exercise", required = true) @PathVariable String exerciseId) {
         List<WorkoutSet> sets = workoutSetService.getWorkoutSetsByExerciseId(exerciseId);
         return ResponseEntity.ok(sets);
     }
 
     @GetMapping("/exercise/{exerciseId}/top")
-    @ApiOperation(value = "Get top workout sets by exercise ID", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of top workout sets")
+    @Operation(summary = "Get top workout sets by exercise ID")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of top workout sets")
     public ResponseEntity<List<WorkoutSet>> getTopWorkoutSetsByExerciseId(
-            @ApiParam(value = "ID of the exercise", required = true) @PathVariable String exerciseId,
-            @ApiParam(value = "Limit of workout sets to retrieve", defaultValue = "10") @RequestParam(defaultValue = "10") int limit) {
+            @Parameter(description = "ID of the exercise", required = true) @PathVariable String exerciseId,
+            @Parameter(description = "Limit of workout sets to retrieve", required = false) @RequestParam(defaultValue = "10") int limit) {
         List<WorkoutSet> topSets = workoutSetService.getTopWorkoutSetsByExerciseId(exerciseId, limit);
         return ResponseEntity.ok(topSets);
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update a workout set", response = WorkoutSet.class)
+    @Operation(summary = "Update a workout set")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Workout set successfully updated"),
-            @ApiResponse(code = 400, message = "Invalid input"),
-            @ApiResponse(code = 404, message = "Workout set not found")
+            @ApiResponse(responseCode = "200", description = "Workout set successfully updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Workout set not found")
     })
     public ResponseEntity<WorkoutSet> updateWorkoutSet(
-            @ApiParam(value = "ID of the workout set to be updated", required = true) @PathVariable String id,
-            @ApiParam(value = "Updated workout set object", required = true) @RequestBody WorkoutSet workoutSet) {
+            @Parameter(description = "ID of the workout set to be updated", required = true) @PathVariable String id,
+            @Parameter(description = "Updated workout set object", required = true) @RequestBody WorkoutSet workoutSet) {
         if (!id.equals(workoutSet.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -89,12 +93,12 @@ public class WorkoutSetController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete a workout set")
+    @Operation(summary = "Delete a workout set")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Workout set successfully deleted"),
-            @ApiResponse(code = 404, message = "Workout set not found")
+            @ApiResponse(responseCode = "204", description = "Workout set successfully deleted"),
+            @ApiResponse(responseCode = "404", description = "Workout set not found")
     })
-    public ResponseEntity<Void> deleteWorkoutSet(@ApiParam(value = "ID of the workout set to be deleted", required = true) @PathVariable String id) {
+    public ResponseEntity<Void> deleteWorkoutSet(@Parameter(description = "ID of the workout set to be deleted", required = true) @PathVariable String id) {
         workoutSetService.deleteWorkoutSet(id);
         return ResponseEntity.noContent().build();
     }

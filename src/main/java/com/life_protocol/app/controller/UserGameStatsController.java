@@ -2,7 +2,11 @@ package com.life_protocol.app.controller;
 
 import com.life_protocol.app.model.UserGameStats;
 import com.life_protocol.app.service.UserGameStatsService;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user-game-stats")
-@Api(tags = "User Game Stats Management", description = "Operations pertaining to user game statistics in the Life Protocol application")
+@Tag(name = "User Game Stats Management", description = "Operations pertaining to user game statistics in the Life Protocol application")
 public class UserGameStatsController {
 
     private final UserGameStatsService userGameStatsService;
@@ -23,66 +27,66 @@ public class UserGameStatsController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Create new user game stats", response = UserGameStats.class)
+    @Operation(summary = "Create new user game stats")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User game stats successfully created"),
-            @ApiResponse(code = 400, message = "Invalid input")
+            @ApiResponse(responseCode = "201", description = "User game stats successfully created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input")
     })
-    public ResponseEntity<UserGameStats> createUserGameStats(@ApiParam(value = "User game stats object to be created", required = true) @RequestBody UserGameStats userGameStats) {
+    public ResponseEntity<UserGameStats> createUserGameStats(@Parameter(description = "User game stats object to be created", required = true) @RequestBody UserGameStats userGameStats) {
         UserGameStats createdStats = userGameStatsService.createUserGameStats(userGameStats);
         return new ResponseEntity<>(createdStats, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Get user game stats by ID", response = UserGameStats.class)
+    @Operation(summary = "Get user game stats by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved user game stats"),
-            @ApiResponse(code = 404, message = "User game stats not found")
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved user game stats"),
+            @ApiResponse(responseCode = "404", description = "User game stats not found")
     })
-    public ResponseEntity<UserGameStats> getUserGameStatsById(@ApiParam(value = "ID of the user game stats to be retrieved", required = true) @PathVariable String id) {
+    public ResponseEntity<UserGameStats> getUserGameStatsById(@Parameter(description = "ID of the user game stats to be retrieved", required = true) @PathVariable String id) {
         return userGameStatsService.getUserGameStatsById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/user/{userId}")
-    @ApiOperation(value = "Get user game stats by user ID", response = UserGameStats.class)
+    @Operation(summary = "Get user game stats by user ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved user game stats"),
-            @ApiResponse(code = 404, message = "User game stats not found")
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved user game stats"),
+            @ApiResponse(responseCode = "404", description = "User game stats not found")
     })
-    public ResponseEntity<UserGameStats> getUserGameStatsByUserId(@ApiParam(value = "ID of the user", required = true) @PathVariable String userId) {
+    public ResponseEntity<UserGameStats> getUserGameStatsByUserId(@Parameter(description = "ID of the user", required = true) @PathVariable String userId) {
         return userGameStatsService.getUserGameStatsByUserId(userId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/top/level")
-    @ApiOperation(value = "Get top users by level", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of top users by level")
-    public ResponseEntity<List<UserGameStats>> getTopUsersByLevel(@ApiParam(value = "Limit of users to retrieve", defaultValue = "10") @RequestParam(defaultValue = "10") int limit) {
+    @Operation(summary = "Get top users by level")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of top users by level")
+    public ResponseEntity<List<UserGameStats>> getTopUsersByLevel(@Parameter(description = "Limit of users to retrieve", required = false) @RequestParam(defaultValue = "10") int limit) {
         List<UserGameStats> topUsers = userGameStatsService.getTopUsersByLevel(limit);
         return ResponseEntity.ok(topUsers);
     }
 
     @GetMapping("/top/xp")
-    @ApiOperation(value = "Get top users by experience points", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of top users by experience points")
-    public ResponseEntity<List<UserGameStats>> getTopUsersByExperiencePoints(@ApiParam(value = "Limit of users to retrieve", defaultValue = "10") @RequestParam(defaultValue = "10") int limit) {
+    @Operation(summary = "Get top users by experience points")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of top users by experience points")
+    public ResponseEntity<List<UserGameStats>> getTopUsersByExperiencePoints(@Parameter(description = "Limit of users to retrieve", required = false) @RequestParam(defaultValue = "10") int limit) {
         List<UserGameStats> topUsers = userGameStatsService.getTopUsersByExperiencePoints(limit);
         return ResponseEntity.ok(topUsers);
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update user game stats", response = UserGameStats.class)
+    @Operation(summary = "Update user game stats")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "User game stats successfully updated"),
-            @ApiResponse(code = 400, message = "Invalid input"),
-            @ApiResponse(code = 404, message = "User game stats not found")
+            @ApiResponse(responseCode = "200", description = "User game stats successfully updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "User game stats not found")
     })
     public ResponseEntity<UserGameStats> updateUserGameStats(
-            @ApiParam(value = "ID of the user game stats to be updated", required = true) @PathVariable String id,
-            @ApiParam(value = "Updated user game stats object", required = true) @RequestBody UserGameStats userGameStats) {
+            @Parameter(description = "ID of the user game stats to be updated", required = true) @PathVariable String id,
+            @Parameter(description = "Updated user game stats object", required = true) @RequestBody UserGameStats userGameStats) {
         if (!id.equals(userGameStats.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -91,60 +95,60 @@ public class UserGameStatsController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete user game stats")
+    @Operation(summary = "Delete user game stats")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "User game stats successfully deleted"),
-            @ApiResponse(code = 404, message = "User game stats not found")
+            @ApiResponse(responseCode = "204", description = "User game stats successfully deleted"),
+            @ApiResponse(responseCode = "404", description = "User game stats not found")
     })
-    public ResponseEntity<Void> deleteUserGameStats(@ApiParam(value = "ID of the user game stats to be deleted", required = true) @PathVariable String id) {
+    public ResponseEntity<Void> deleteUserGameStats(@Parameter(description = "ID of the user game stats to be deleted", required = true) @PathVariable String id) {
         userGameStatsService.deleteUserGameStats(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{userId}/add-xp")
-    @ApiOperation(value = "Add experience points to a user")
+    @Operation(summary = "Add experience points to a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Experience points successfully added"),
-            @ApiResponse(code = 404, message = "User game stats not found")
+            @ApiResponse(responseCode = "204", description = "Experience points successfully added"),
+            @ApiResponse(responseCode = "404", description = "User game stats not found")
     })
     public ResponseEntity<Void> addExperiencePoints(
-            @ApiParam(value = "ID of the user", required = true) @PathVariable String userId,
-            @ApiParam(value = "Experience points to add", required = true) @RequestParam int points) {
+            @Parameter(description = "ID of the user", required = true) @PathVariable String userId,
+            @Parameter(description = "Experience points to add", required = true) @RequestParam int points) {
         userGameStatsService.addExperiencePoints(userId, points);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{userId}/update-hp")
-    @ApiOperation(value = "Update health points of a user")
+    @Operation(summary = "Update health points of a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Health points successfully updated"),
-            @ApiResponse(code = 404, message = "User game stats not found")
+            @ApiResponse(responseCode = "204", description = "Health points successfully updated"),
+            @ApiResponse(responseCode = "404", description = "User game stats not found")
     })
     public ResponseEntity<Void> updateHealthPoints(
-            @ApiParam(value = "ID of the user", required = true) @PathVariable String userId,
-            @ApiParam(value = "New health points value", required = true) @RequestParam int healthPoints) {
+            @Parameter(description = "ID of the user", required = true) @PathVariable String userId,
+            @Parameter(description = "New health points value", required = true) @RequestParam int healthPoints) {
         userGameStatsService.updateHealthPoints(userId, healthPoints);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{userId}/increment-streak")
-    @ApiOperation(value = "Increment streak for a user")
+    @Operation(summary = "Increment streak for a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Streak successfully incremented"),
-            @ApiResponse(code = 404, message = "User game stats not found")
+            @ApiResponse(responseCode = "204", description = "Streak successfully incremented"),
+            @ApiResponse(responseCode = "404", description = "User game stats not found")
     })
-    public ResponseEntity<Void> incrementStreak(@ApiParam(value = "ID of the user", required = true) @PathVariable String userId) {
+    public ResponseEntity<Void> incrementStreak(@Parameter(description = "ID of the user", required = true) @PathVariable String userId) {
         userGameStatsService.incrementStreak(userId);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{userId}/reset-streak")
-    @ApiOperation(value = "Reset streak for a user")
+    @Operation(summary = "Reset streak for a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Streak successfully reset"),
-            @ApiResponse(code = 404, message = "User game stats not found")
+            @ApiResponse(responseCode = "204", description = "Streak successfully reset"),
+            @ApiResponse(responseCode = "404", description = "User game stats not found")
     })
-    public ResponseEntity<Void> resetStreak(@ApiParam(value = "ID of the user", required = true) @PathVariable String userId) {
+    public ResponseEntity<Void> resetStreak(@Parameter(description = "ID of the user", required = true) @PathVariable String userId) {
         userGameStatsService.resetStreak(userId);
         return ResponseEntity.noContent().build();
     }

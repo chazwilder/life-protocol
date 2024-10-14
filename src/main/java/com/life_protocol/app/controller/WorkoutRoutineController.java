@@ -2,7 +2,11 @@ package com.life_protocol.app.controller;
 
 import com.life_protocol.app.model.WorkoutRoutine;
 import com.life_protocol.app.service.WorkoutRoutineService;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/workout-routines")
-@Api(tags = "Workout Routine Management", description = "Operations pertaining to workout routines in the Life Protocol application")
+@Tag(name = "Workout Routine Management", description = "Operations pertaining to workout routines in the Life Protocol application")
 public class WorkoutRoutineController {
 
     private final WorkoutRoutineService workoutRoutineService;
@@ -23,64 +27,64 @@ public class WorkoutRoutineController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Create a new workout routine", response = WorkoutRoutine.class)
+    @Operation(summary = "Create a new workout routine")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Workout routine successfully created"),
-            @ApiResponse(code = 400, message = "Invalid input")
+            @ApiResponse(responseCode = "201", description = "Workout routine successfully created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input")
     })
-    public ResponseEntity<WorkoutRoutine> createWorkoutRoutine(@ApiParam(value = "Workout routine object to be created", required = true) @RequestBody WorkoutRoutine workoutRoutine) {
+    public ResponseEntity<WorkoutRoutine> createWorkoutRoutine(@Parameter(description = "Workout routine object to be created", required = true) @RequestBody WorkoutRoutine workoutRoutine) {
         WorkoutRoutine createdRoutine = workoutRoutineService.createWorkoutRoutine(workoutRoutine);
         return new ResponseEntity<>(createdRoutine, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Get a workout routine by ID", response = WorkoutRoutine.class)
+    @Operation(summary = "Get a workout routine by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved workout routine"),
-            @ApiResponse(code = 404, message = "Workout routine not found")
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved workout routine"),
+            @ApiResponse(responseCode = "404", description = "Workout routine not found")
     })
-    public ResponseEntity<WorkoutRoutine> getWorkoutRoutineById(@ApiParam(value = "ID of the workout routine to be retrieved", required = true) @PathVariable String id) {
+    public ResponseEntity<WorkoutRoutine> getWorkoutRoutineById(@Parameter(description = "ID of the workout routine to be retrieved", required = true) @PathVariable String id) {
         return workoutRoutineService.getWorkoutRoutineById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/user/{userId}")
-    @ApiOperation(value = "Get workout routines by user ID", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of workout routines")
-    public ResponseEntity<List<WorkoutRoutine>> getWorkoutRoutinesByUserId(@ApiParam(value = "ID of the user", required = true) @PathVariable String userId) {
+    @Operation(summary = "Get workout routines by user ID")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of workout routines")
+    public ResponseEntity<List<WorkoutRoutine>> getWorkoutRoutinesByUserId(@Parameter(description = "ID of the user", required = true) @PathVariable String userId) {
         List<WorkoutRoutine> routines = workoutRoutineService.getWorkoutRoutinesByUserId(userId);
         return ResponseEntity.ok(routines);
     }
 
     @GetMapping("/user/{userId}/difficulty/{difficultyLevel}")
-    @ApiOperation(value = "Get workout routines by user ID and difficulty level", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of workout routines")
+    @Operation(summary = "Get workout routines by user ID and difficulty level")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of workout routines")
     public ResponseEntity<List<WorkoutRoutine>> getWorkoutRoutinesByDifficultyLevel(
-            @ApiParam(value = "ID of the user", required = true) @PathVariable String userId,
-            @ApiParam(value = "Difficulty level", required = true) @PathVariable String difficultyLevel) {
+            @Parameter(description = "ID of the user", required = true) @PathVariable String userId,
+            @Parameter(description = "Difficulty level", required = true) @PathVariable String difficultyLevel) {
         List<WorkoutRoutine> routines = workoutRoutineService.getWorkoutRoutinesByDifficultyLevel(userId, difficultyLevel);
         return ResponseEntity.ok(routines);
     }
 
     @GetMapping("/search")
-    @ApiOperation(value = "Search workout routines by name", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of workout routines")
-    public ResponseEntity<List<WorkoutRoutine>> searchWorkoutRoutines(@ApiParam(value = "Name to search for", required = true) @RequestParam String name) {
+    @Operation(summary = "Search workout routines by name")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of workout routines")
+    public ResponseEntity<List<WorkoutRoutine>> searchWorkoutRoutines(@Parameter(description = "Name to search for", required = true) @RequestParam String name) {
         List<WorkoutRoutine> routines = workoutRoutineService.searchWorkoutRoutines(name);
         return ResponseEntity.ok(routines);
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update a workout routine", response = WorkoutRoutine.class)
+    @Operation(summary = "Update a workout routine")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Workout routine successfully updated"),
-            @ApiResponse(code = 400, message = "Invalid input"),
-            @ApiResponse(code = 404, message = "Workout routine not found")
+            @ApiResponse(responseCode = "200", description = "Workout routine successfully updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Workout routine not found")
     })
     public ResponseEntity<WorkoutRoutine> updateWorkoutRoutine(
-            @ApiParam(value = "ID of the workout routine to be updated", required = true) @PathVariable String id,
-            @ApiParam(value = "Updated workout routine object", required = true) @RequestBody WorkoutRoutine workoutRoutine) {
+            @Parameter(description = "ID of the workout routine to be updated", required = true) @PathVariable String id,
+            @Parameter(description = "Updated workout routine object", required = true) @RequestBody WorkoutRoutine workoutRoutine) {
         if (!id.equals(workoutRoutine.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -89,38 +93,38 @@ public class WorkoutRoutineController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete a workout routine")
+    @Operation(summary = "Delete a workout routine")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Workout routine successfully deleted"),
-            @ApiResponse(code = 404, message = "Workout routine not found")
+            @ApiResponse(responseCode = "204", description = "Workout routine successfully deleted"),
+            @ApiResponse(responseCode = "404", description = "Workout routine not found")
     })
-    public ResponseEntity<Void> deleteWorkoutRoutine(@ApiParam(value = "ID of the workout routine to be deleted", required = true) @PathVariable String id) {
+    public ResponseEntity<Void> deleteWorkoutRoutine(@Parameter(description = "ID of the workout routine to be deleted", required = true) @PathVariable String id) {
         workoutRoutineService.deleteWorkoutRoutine(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{routineId}/exercises")
-    @ApiOperation(value = "Add an exercise to a workout routine")
+    @Operation(summary = "Add an exercise to a workout routine")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Exercise successfully added to workout routine"),
-            @ApiResponse(code = 404, message = "Workout routine not found")
+            @ApiResponse(responseCode = "204", description = "Exercise successfully added to workout routine"),
+            @ApiResponse(responseCode = "404", description = "Workout routine not found")
     })
     public ResponseEntity<Void> addExerciseToRoutine(
-            @ApiParam(value = "ID of the workout routine", required = true) @PathVariable String routineId,
-            @ApiParam(value = "Exercise to be added", required = true) @RequestBody WorkoutRoutine.WorkoutExercise exercise) {
+            @Parameter(description = "ID of the workout routine", required = true) @PathVariable String routineId,
+            @Parameter(description = "Exercise to be added", required = true) @RequestBody WorkoutRoutine.WorkoutExercise exercise) {
         workoutRoutineService.addExerciseToRoutine(routineId, exercise);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{routineId}/exercises/{exerciseId}")
-    @ApiOperation(value = "Remove an exercise from a workout routine")
+    @Operation(summary = "Remove an exercise from a workout routine")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Exercise successfully removed from workout routine"),
-            @ApiResponse(code = 404, message = "Workout routine or exercise not found")
+            @ApiResponse(responseCode = "204", description = "Exercise successfully removed from workout routine"),
+            @ApiResponse(responseCode = "404", description = "Workout routine or exercise not found")
     })
     public ResponseEntity<Void> removeExerciseFromRoutine(
-            @ApiParam(value = "ID of the workout routine", required = true) @PathVariable String routineId,
-            @ApiParam(value = "ID of the exercise to be removed", required = true) @PathVariable String exerciseId) {
+            @Parameter(description = "ID of the workout routine", required = true) @PathVariable String routineId,
+            @Parameter(description = "ID of the exercise to be removed", required = true) @PathVariable String exerciseId) {
         workoutRoutineService.removeExerciseFromRoutine(routineId, exerciseId);
         return ResponseEntity.noContent().build();
     }
