@@ -36,7 +36,7 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     @Override
     public List<Challenge> getChallengesByParticipant(String userId) {
-        return challengeRepository.findByParticipantsContaining(userId);
+        return challengeRepository.findByParticipantIdsContaining(userId);
     }
 
     @Override
