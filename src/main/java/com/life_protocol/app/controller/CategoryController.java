@@ -2,11 +2,11 @@ package com.life_protocol.app.controller;
 
 import com.life_protocol.app.model.Category;
 import com.life_protocol.app.service.CategoryService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
-@Api(tags = "Category Management", description = "Operations pertaining to categories in the Life Protocol application")
+@Tag(name = "Category Management", description = "Operations pertaining to categories in the Life Protocol application")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -27,46 +27,46 @@ public class CategoryController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Create a new category", response = Category.class)
+    @Operation(summary = "Create a new category")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Category successfully created"),
-            @ApiResponse(code = 400, message = "Invalid input")
+            @ApiResponse(responseCode = "201", description = "Category successfully created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input")
     })
-    public ResponseEntity<Category> createCategory(@ApiParam(value = "Category object to be created", required = true) @RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@Parameter(description = "Category object to be created", required = true) @RequestBody Category category) {
         Category createdCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Get a category by ID", response = Category.class)
+    @Operation(summary = "Get a category by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved category"),
-            @ApiResponse(code = 404, message = "Category not found")
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved category"),
+            @ApiResponse(responseCode = "404", description = "Category not found")
     })
-    public ResponseEntity<Category> getCategoryById(@ApiParam(value = "ID of the category to be retrieved", required = true) @PathVariable String id) {
+    public ResponseEntity<Category> getCategoryById(@Parameter(description = "ID of the category to be retrieved", required = true) @PathVariable String id) {
         return categoryService.getCategoryById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    @ApiOperation(value = "Get all categories", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of categories")
+    @Operation(summary = "Get all categories")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of categories")
     public ResponseEntity<List<Category>> getAllCategories() {
         List<Category> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update a category", response = Category.class)
+    @Operation(summary = "Update a category")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Category successfully updated"),
-            @ApiResponse(code = 400, message = "Invalid input"),
-            @ApiResponse(code = 404, message = "Category not found")
+            @ApiResponse(responseCode = "200", description = "Category successfully updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "Category not found")
     })
     public ResponseEntity<Category> updateCategory(
-            @ApiParam(value = "ID of the category to be updated", required = true) @PathVariable String id,
-            @ApiParam(value = "Updated category object", required = true) @RequestBody Category category) {
+            @Parameter(description = "ID of the category to be updated", required = true) @PathVariable String id,
+            @Parameter(description = "Updated category object", required = true) @RequestBody Category category) {
         if (!id.equals(category.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -75,32 +75,32 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete a category")
+    @Operation(summary = "Delete a category")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Category successfully deleted"),
-            @ApiResponse(code = 404, message = "Category not found")
+            @ApiResponse(responseCode = "204", description = "Category successfully deleted"),
+            @ApiResponse(responseCode = "404", description = "Category not found")
     })
-    public ResponseEntity<Void> deleteCategory(@ApiParam(value = "ID of the category to be deleted", required = true) @PathVariable String id) {
+    public ResponseEntity<Void> deleteCategory(@Parameter(description = "ID of the category to be deleted", required = true) @PathVariable String id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/name/{name}")
-    @ApiOperation(value = "Get a category by name", response = Category.class)
+    @Operation(summary = "Get a category by name")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved category"),
-            @ApiResponse(code = 404, message = "Category not found")
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved category"),
+            @ApiResponse(responseCode = "404", description = "Category not found")
     })
-    public ResponseEntity<Category> getCategoryByName(@ApiParam(value = "Name of the category to be retrieved", required = true) @PathVariable String name) {
+    public ResponseEntity<Category> getCategoryByName(@Parameter(description = "Name of the category to be retrieved", required = true) @PathVariable String name) {
         return categoryService.getCategoryByName(name)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/search")
-    @ApiOperation(value = "Search categories by name pattern", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of categories")
-    public ResponseEntity<List<Category>> searchCategories(@ApiParam(value = "Name pattern to search for", required = true) @RequestParam String namePattern) {
+    @Operation(summary = "Search categories by name pattern")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of categories")
+    public ResponseEntity<List<Category>> searchCategories(@Parameter(description = "Name pattern to search for", required = true) @RequestParam String namePattern) {
         List<Category> categories = categoryService.searchCategories(namePattern);
         return ResponseEntity.ok(categories);
     }

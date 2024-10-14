@@ -2,7 +2,11 @@ package com.life_protocol.app.controller;
 
 import com.life_protocol.app.model.AIAdvice;
 import com.life_protocol.app.service.AIAdviceService;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/ai-advice")
-@Api(tags = "AI Advice Management", description = "Operations pertaining to AI-generated advice in the Life Protocol application")
+@Tag(name = "AI Advice Management", description = "Operations pertaining to AI-generated advice in the Life Protocol application")
 public class AIAdviceController {
 
     private final AIAdviceService aiAdviceService;
@@ -23,74 +27,74 @@ public class AIAdviceController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Create a new AI advice", response = AIAdvice.class)
+    @Operation(summary = "Create a new AI advice")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "AI advice successfully created"),
-            @ApiResponse(code = 400, message = "Invalid input")
+            @ApiResponse(responseCode = "201", description = "AI advice successfully created"),
+            @ApiResponse(responseCode = "400", description = "Invalid input")
     })
-    public ResponseEntity<AIAdvice> createAIAdvice(@ApiParam(value = "AI advice object to be created", required = true) @RequestBody AIAdvice aiAdvice) {
+    public ResponseEntity<AIAdvice> createAIAdvice(@Parameter(description = "AI advice object to be created", required = true) @RequestBody AIAdvice aiAdvice) {
         AIAdvice createdAdvice = aiAdviceService.createAIAdvice(aiAdvice);
         return new ResponseEntity<>(createdAdvice, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Get an AI advice by ID", response = AIAdvice.class)
+    @Operation(summary = "Get an AI advice by ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved AI advice"),
-            @ApiResponse(code = 404, message = "AI advice not found")
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved AI advice"),
+            @ApiResponse(responseCode = "404", description = "AI advice not found")
     })
-    public ResponseEntity<AIAdvice> getAIAdviceById(@ApiParam(value = "ID of the AI advice to be retrieved", required = true) @PathVariable String id) {
+    public ResponseEntity<AIAdvice> getAIAdviceById(@Parameter(description = "ID of the AI advice to be retrieved", required = true) @PathVariable String id) {
         return aiAdviceService.getAIAdviceById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/user/{userId}")
-    @ApiOperation(value = "Get AI advice for a user", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of AI advice")
-    public ResponseEntity<List<AIAdvice>> getAIAdviceByUserId(@ApiParam(value = "ID of the user", required = true) @PathVariable String userId) {
+    @Operation(summary = "Get AI advice for a user")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of AI advice")
+    public ResponseEntity<List<AIAdvice>> getAIAdviceByUserId(@Parameter(description = "ID of the user", required = true) @PathVariable String userId) {
         List<AIAdvice> advice = aiAdviceService.getAIAdviceByUserId(userId);
         return ResponseEntity.ok(advice);
     }
 
     @GetMapping("/user/{userId}/category/{category}")
-    @ApiOperation(value = "Get AI advice for a user by category", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of AI advice")
+    @Operation(summary = "Get AI advice for a user by category")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of AI advice")
     public ResponseEntity<List<AIAdvice>> getAIAdviceByUserIdAndCategory(
-            @ApiParam(value = "ID of the user", required = true) @PathVariable String userId,
-            @ApiParam(value = "Category of advice", required = true) @PathVariable String category) {
+            @Parameter(description = "ID of the user", required = true) @PathVariable String userId,
+            @Parameter(description = "Category of advice", required = true) @PathVariable String category) {
         List<AIAdvice> advice = aiAdviceService.getAIAdviceByUserIdAndCategory(userId, category);
         return ResponseEntity.ok(advice);
     }
 
     @GetMapping("/user/{userId}/unread")
-    @ApiOperation(value = "Get unread AI advice for a user", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of unread AI advice")
-    public ResponseEntity<List<AIAdvice>> getUnreadAIAdviceByUserId(@ApiParam(value = "ID of the user", required = true) @PathVariable String userId) {
+    @Operation(summary = "Get unread AI advice for a user")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of unread AI advice")
+    public ResponseEntity<List<AIAdvice>> getUnreadAIAdviceByUserId(@Parameter(description = "ID of the user", required = true) @PathVariable String userId) {
         List<AIAdvice> advice = aiAdviceService.getUnreadAIAdviceByUserId(userId);
         return ResponseEntity.ok(advice);
     }
 
     @GetMapping("/user/{userId}/recent")
-    @ApiOperation(value = "Get recent AI advice for a user", response = List.class)
-    @ApiResponse(code = 200, message = "Successfully retrieved list of recent AI advice")
+    @Operation(summary = "Get recent AI advice for a user")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved list of recent AI advice")
     public ResponseEntity<List<AIAdvice>> getRecentAIAdviceByUserId(
-            @ApiParam(value = "ID of the user", required = true) @PathVariable String userId,
-            @ApiParam(value = "Limit of advice to retrieve", defaultValue = "10") @RequestParam(defaultValue = "10") int limit) {
+            @Parameter(description = "ID of the user", required = true) @PathVariable String userId,
+            @Parameter(description = "Limit of advice to retrieve", required = false) @RequestParam(defaultValue = "10") int limit) {
         List<AIAdvice> advice = aiAdviceService.getRecentAIAdviceByUserId(userId, limit);
         return ResponseEntity.ok(advice);
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update an AI advice", response = AIAdvice.class)
+    @Operation(summary = "Update an AI advice")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "AI advice successfully updated"),
-            @ApiResponse(code = 400, message = "Invalid input"),
-            @ApiResponse(code = 404, message = "AI advice not found")
+            @ApiResponse(responseCode = "200", description = "AI advice successfully updated"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "404", description = "AI advice not found")
     })
     public ResponseEntity<AIAdvice> updateAIAdvice(
-            @ApiParam(value = "ID of the AI advice to be updated", required = true) @PathVariable String id,
-            @ApiParam(value = "Updated AI advice object", required = true) @RequestBody AIAdvice aiAdvice) {
+            @Parameter(description = "ID of the AI advice to be updated", required = true) @PathVariable String id,
+            @Parameter(description = "Updated AI advice object", required = true) @RequestBody AIAdvice aiAdvice) {
         if (!id.equals(aiAdvice.getId())) {
             return ResponseEntity.badRequest().build();
         }
@@ -99,60 +103,60 @@ public class AIAdviceController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete an AI advice")
+    @Operation(summary = "Delete an AI advice")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "AI advice successfully deleted"),
-            @ApiResponse(code = 404, message = "AI advice not found")
+            @ApiResponse(responseCode = "204", description = "AI advice successfully deleted"),
+            @ApiResponse(responseCode = "404", description = "AI advice not found")
     })
-    public ResponseEntity<Void> deleteAIAdvice(@ApiParam(value = "ID of the AI advice to be deleted", required = true) @PathVariable String id) {
+    public ResponseEntity<Void> deleteAIAdvice(@Parameter(description = "ID of the AI advice to be deleted", required = true) @PathVariable String id) {
         aiAdviceService.deleteAIAdvice(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/mark-read")
-    @ApiOperation(value = "Mark an AI advice as read")
+    @Operation(summary = "Mark an AI advice as read")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "AI advice successfully marked as read"),
-            @ApiResponse(code = 404, message = "AI advice not found")
+            @ApiResponse(responseCode = "204", description = "AI advice successfully marked as read"),
+            @ApiResponse(responseCode = "404", description = "AI advice not found")
     })
-    public ResponseEntity<Void> markAIAdviceAsRead(@ApiParam(value = "ID of the AI advice to be marked as read", required = true) @PathVariable String id) {
+    public ResponseEntity<Void> markAIAdviceAsRead(@Parameter(description = "ID of the AI advice to be marked as read", required = true) @PathVariable String id) {
         aiAdviceService.markAIAdviceAsRead(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/mark-implemented")
-    @ApiOperation(value = "Mark an AI advice as implemented")
+    @Operation(summary = "Mark an AI advice as implemented")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "AI advice successfully marked as implemented"),
-            @ApiResponse(code = 404, message = "AI advice not found")
+            @ApiResponse(responseCode = "204", description = "AI advice successfully marked as implemented"),
+            @ApiResponse(responseCode = "404", description = "AI advice not found")
     })
-    public ResponseEntity<Void> markAIAdviceAsImplemented(@ApiParam(value = "ID of the AI advice to be marked as implemented", required = true) @PathVariable String id) {
+    public ResponseEntity<Void> markAIAdviceAsImplemented(@Parameter(description = "ID of the AI advice to be marked as implemented", required = true) @PathVariable String id) {
         aiAdviceService.markAIAdviceAsImplemented(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/rate")
-    @ApiOperation(value = "Rate an AI advice")
+    @Operation(summary = "Rate an AI advice")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "AI advice successfully rated"),
-            @ApiResponse(code = 404, message = "AI advice not found")
+            @ApiResponse(responseCode = "204", description = "AI advice successfully rated"),
+            @ApiResponse(responseCode = "404", description = "AI advice not found")
     })
     public ResponseEntity<Void> rateAIAdvice(
-            @ApiParam(value = "ID of the AI advice to be rated", required = true) @PathVariable String id,
-            @ApiParam(value = "Rating value", required = true) @RequestParam int rating) {
+            @Parameter(description = "ID of the AI advice to be rated", required = true) @PathVariable String id,
+            @Parameter(description = "Rating value", required = true) @RequestParam int rating) {
         aiAdviceService.rateAIAdvice(id, rating);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/feedback")
-    @ApiOperation(value = "Provide feedback for an AI advice")
+    @Operation(summary = "Provide feedback for an AI advice")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Feedback successfully provided for AI advice"),
-            @ApiResponse(code = 404, message = "AI advice not found")
+            @ApiResponse(responseCode = "204", description = "Feedback successfully provided for AI advice"),
+            @ApiResponse(responseCode = "404", description = "AI advice not found")
     })
     public ResponseEntity<Void> provideFeedbackForAIAdvice(
-            @ApiParam(value = "ID of the AI advice to provide feedback for", required = true) @PathVariable String id,
-            @ApiParam(value = "Feedback text", required = true) @RequestBody String feedback) {
+            @Parameter(description = "ID of the AI advice to provide feedback for", required = true) @PathVariable String id,
+            @Parameter(description = "Feedback text", required = true) @RequestBody String feedback) {
         aiAdviceService.provideFeedbackForAIAdvice(id, feedback);
         return ResponseEntity.noContent().build();
     }

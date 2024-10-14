@@ -26,6 +26,13 @@ public class User {
     // Constructors
     public User() {}
 
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.createdAt = LocalDateTime.now();
+    }
+
     public User(String username, String email, String firstName, String lastName) {
         this.username = username;
         this.email = email;
