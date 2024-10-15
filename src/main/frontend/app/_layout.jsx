@@ -7,10 +7,10 @@ SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   let fontsLoaded = useFonts({
-    'Poppins-Regular': require('../../assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-Bold': require('../../assets/fonts/Poppins-Bold.ttf'),
-    'Poppins-SemiBold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
-    'Poppins_Black': require('../../assets/fonts/Poppins-Black.ttf'),
+    'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
+    'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
   });
 
   useEffect(() => {
