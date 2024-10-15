@@ -7,10 +7,10 @@ export default function App() {
     <SafeAreaView className="items-center justify-center flex-1 gap-4 bg-white">
       <Text>Welcome to</Text>
       <Text className="text-4xl font-pregular">Life Protocol!</Text>
-      <Link href="/tabs" style={{ marginTop: 15 }}>
+      <Link href="/(tabs)/home" style={{ marginTop: 15 }}>
         Open Tabs
       </Link>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
