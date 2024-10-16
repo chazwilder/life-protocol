@@ -16,9 +16,6 @@ export default function App() {
           <Text className="text-4xl font-pblack text-secondary-200">
             Life Protocol!
           </Text>
-          <Link href="/(tabs)/home" style={{ marginTop: 15, color: "#FFF" }}>
-            Open Tabs
-          </Link>
           <CustomButton
             title="Continue with Email"
             handlePress={() => router.push("/sign-in")}
