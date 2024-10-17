@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 
 import CustomButton from "../../components/CustomButton";
+import { createUser } from "../../lib/auth";
 
 const SignUp = () => {
   const [form, setform] = useState({
@@ -15,10 +16,22 @@ const SignUp = () => {
 
   const [isSubmitting, setisSubmitting] = useState(false);
 
-  const handleSubmit = () => {
-    // TODO: Make API call to sign in user
-    console.log(form);
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      await createUser(form);
+      // Handle successful signup (e.g., show a success message, navigate to login)
+      console.log("User created successfully");
+      // You might want to navigate to the login page or show a success message here
+    } catch (error) {
+      // Handle error (e.g., show error message to user)
+      console.error("Error creating user:", error);
+      // You might want to show an error message to the user here
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   return (
     <SafeAreaView className="bg-primary h-full">
