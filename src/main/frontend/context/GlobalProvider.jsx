@@ -22,7 +22,6 @@ const GlobalProvider = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       const { token, username } = await getStoredAuthData();
-      console.log("Checking auth status", token, username);
       if (token && username) {
         const userData = await fetchUserData(token, username);
         setUser(userData);
