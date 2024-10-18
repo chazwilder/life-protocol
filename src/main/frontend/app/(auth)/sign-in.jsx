@@ -1,35 +1,44 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 
 import CustomButton from "../../components/CustomButton";
+import { loginUser } from "../../lib/auth";
 
 const SignIn = () => {
   const [form, setform] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
-  const [isSubmitting, setisSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = () => {
-    // TODO: Make API call to sign in user
-    console.log(form);
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      await loginUser(form);
+      console.log("User created successfully");
+      router.push("/home");
+    } catch (error) {
+      console.error("Error creating user:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="h-full bg-primary">
       <ScrollView>
-        <View className="w-full justify-center h-full px-4 my-6">
-          <Text className="text-2xl text-white font-pregular mt-10">
+        <View className="justify-center w-full h-full px-4 my-6">
+          <Text className="mt-10 text-2xl text-white font-pregular">
             Log in to LifeProtocol
           </Text>
           <FormField
-            title="Email"
-            value={form.email}
-            handleChangeText={(e) => setform({ ...form, email: e })}
+            title="Username"
+            value={form.username}
+            handleChangeText={(e) => setform({ ...form, username: e })}
             otherStyles="mt-7"
             keyboardType="email-address"
           />
@@ -46,7 +55,7 @@ const SignIn = () => {
             isLoading={isSubmitting}
           />
         </View>
-        <View className="justify-center flex-row gap-2">
+        <View className="flex-row justify-center gap-2">
           <Text className="text-lg text-gray-100 font-pregular">
             Don't have an account?
           </Text>

@@ -1,11 +1,11 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 
 import CustomButton from "../../components/CustomButton";
-import { createUser } from "../../lib/auth";
+import { createUser, loginUser } from "../../lib/auth";
 
 const SignUp = () => {
   const [form, setform] = useState({
@@ -20,24 +20,21 @@ const SignUp = () => {
     setIsSubmitting(true);
     try {
       await createUser(form);
-      // Handle successful signup (e.g., show a success message, navigate to login)
+      await loginUser(form);
       console.log("User created successfully");
-      // You might want to navigate to the login page or show a success message here
+      router.push("/home");
     } catch (error) {
-      // Handle error (e.g., show error message to user)
       console.error("Error creating user:", error);
-      // You might want to show an error message to the user here
     } finally {
       setIsSubmitting(false);
     }
   };
 
-
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="h-full bg-primary">
       <ScrollView>
-        <View className="w-full justify-center h-full px-4 my-6">
-          <Text className="text-2xl text-white font-pregular mt-10">
+        <View className="justify-center w-full h-full px-4 my-6">
+          <Text className="mt-10 text-2xl text-white font-pregular">
             Sign Up to LifeProtocol
           </Text>
           <FormField
@@ -66,7 +63,7 @@ const SignUp = () => {
             isLoading={isSubmitting}
           />
         </View>
-        <View className="justify-center flex-row gap-2">
+        <View className="flex-row justify-center gap-2">
           <Text className="text-lg text-gray-100 font-pregular">
             Have have an account already?
           </Text>
