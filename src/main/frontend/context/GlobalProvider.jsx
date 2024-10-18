@@ -11,7 +11,7 @@ const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
 
 const GlobalProvider = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -22,17 +22,18 @@ const GlobalProvider = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       const { token, username } = await getStoredAuthData();
+      console.log("Checking auth status", token, username);
       if (token && username) {
         const userData = await fetchUserData(token, username);
         setUser(userData);
-        setIsLogged(true);
+        setIsLoggedIn(true);
       } else {
-        setIsLogged(false);
+        setIsLoggedIn(false);
         setUser(null);
       }
     } catch (error) {
       console.error("Auth check error:", error);
-      setIsLogged(false);
+      setIsLoggedIn(false);
       setUser(null);
     } finally {
       setLoading(false);
@@ -44,7 +45,7 @@ const GlobalProvider = ({ children }) => {
       const { accessToken } = await loginUser(username, password);
       const userData = await fetchUserData(accessToken, username);
       setUser(userData);
-      setIsLogged(true);
+      setIsLoggedIn(true);
     } catch (error) {
       console.error("Login error:", error);
       throw error;
@@ -54,7 +55,7 @@ const GlobalProvider = ({ children }) => {
   const logout = async () => {
     try {
       await removeAuthData();
-      setIsLogged(false);
+      setIsLoggedIn(false);
       setUser(null);
     } catch (error) {
       console.error("Logout error:", error);
@@ -64,7 +65,7 @@ const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        isLogged,
+        isLoggedIn,
         user,
         loading,
         login,

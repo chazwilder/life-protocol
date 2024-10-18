@@ -13,6 +13,10 @@ const SignIn = () => {
     password: "",
   });
 
+  const { loading, isLoggedIn } = useGlobalContext();
+  console.log("Checking auth for sign in...", loading, isLoggedIn);
+  if (!loading && isLoggedIn) return <Redirect href="/home" />;
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {

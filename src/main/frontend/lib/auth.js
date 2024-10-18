@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 export const authConfig = {
-  endpoint: "http://192.168.1.212:8080",
+  endpoint: "http://10.193.85.246:8080",
 };
 
 export const storeAuthData = async (token, username) => {
