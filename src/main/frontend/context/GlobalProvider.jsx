@@ -1,13 +1,10 @@
-import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
-  getStoredToken,
-  isAuthenticated,
+  fetchUserData,
+  getStoredAuthData,
   loginUser,
-  removeToken,
-  authConfig
+  removeAuthData,
 } from "../lib/auth";
-
 
 const GlobalContext = createContext();
 
@@ -24,11 +21,11 @@ const GlobalProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const authenticated = await isAuthenticated();
-      if (authenticated) {
-        const token = await getStoredToken();
+      const { token, username } = await getStoredAuthData();
+      if (token && username) {
+        const userData = await fetchUserData(token, username);
+        setUser(userData);
         setIsLogged(true);
-        await fetchUserData(token);
       } else {
         setIsLogged(false);
         setUser(null);
@@ -42,23 +39,12 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
-  const fetchUserData = async (token) => {
-    try {
-      const response = await axios.get(`${authConfig.endpoint}/api/users/me`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setUser(response.data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      setUser(null);
-    }
-  };
-
   const login = async (username, password) => {
     try {
-      const token = await loginUser(username, password);
+      const { accessToken } = await loginUser(username, password);
+      const userData = await fetchUserData(accessToken, username);
+      setUser(userData);
       setIsLogged(true);
-      await fetchUserData(token);
     } catch (error) {
       console.error("Login error:", error);
       throw error;
@@ -67,7 +53,7 @@ const GlobalProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await removeToken();
+      await removeAuthData();
       setIsLogged(false);
       setUser(null);
     } catch (error) {
@@ -79,9 +65,7 @@ const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         isLogged,
-        setIsLogged,
         user,
-        setUser,
         loading,
         login,
         logout,

@@ -5,72 +5,61 @@ export const authConfig = {
   endpoint: "http://192.168.1.212:8080",
 };
 
-export const createUser = ({ username, password, email }) => {
-  return axios
-    .post(`${authConfig.endpoint}/api/users`, {
-      username,
-      password,
-      email,
-      firstName: username,
-      lastName: "User",
-      createdAt: new Date().toISOString(),
-      lastLogin: new Date().toISOString(),
-    })
-    .then((response) => {
-      console.log("User created successfully:", response.data);
-      return response.data;
-    })
-    .catch((error) => {
-      console.error(
-        "Error creating user:",
-        error.response ? error.response.data : error.message
-      );
-      throw error;
-    });
-};
-
-export const storeToken = async (token) => {
+export const storeAuthData = async (token, username) => {
   try {
     await AsyncStorage.setItem("accessToken", token);
+    await AsyncStorage.setItem("username", username);
   } catch (error) {
-    console.error("Error storing auth token", error);
+    console.error("Error storing auth data", error);
   }
 };
 
-export const getStoredToken = async () => {
+export const getStoredAuthData = async () => {
   try {
-    return await AsyncStorage.getItem("accessToken");
+    const token = await AsyncStorage.getItem("accessToken");
+    const username = await AsyncStorage.getItem("username");
+    return { token, username };
   } catch (error) {
-    console.error("Error retrieving auth token", error);
-    return null;
+    console.error("Error retrieving auth data", error);
+    return { token: null, username: null };
   }
 };
 
-export const removeToken = async () => {
+export const removeAuthData = async () => {
   try {
     await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("username");
   } catch (error) {
-    console.error("Error removing auth token", error);
+    console.error("Error removing auth data", error);
   }
 };
 
-export const loginUser = async ({ username, password }) => {
+export const loginUser = async (username, password) => {
   try {
     const response = await axios.post(`${authConfig.endpoint}/api/auth/login`, {
       username,
       password,
     });
-
-    const accessToken = response.data.accessToken;
-    await storeToken(accessToken);
-    return accessToken;
+    const { accessToken } = response.data;
+    await storeAuthData(accessToken, username);
+    return { accessToken, username };
   } catch (error) {
     console.error("Login error:", error);
     throw error;
   }
 };
 
-export const isAuthenticated = async () => {
-  const token = await getStoredToken();
-  return !!token;
+export const fetchUserData = async (token, username) => {
+  try {
+    const response = await axios.get(
+      `${authConfig.endpoint}/api/users/username/${username}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
 };

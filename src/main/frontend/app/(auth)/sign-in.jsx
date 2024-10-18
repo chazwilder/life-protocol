@@ -2,13 +2,13 @@ import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import FormField from "../../components/FormField";
-
 import CustomButton from "../../components/CustomButton";
-import { loginUser } from "../../lib/auth";
+import FormField from "../../components/FormField";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const SignIn = () => {
-  const [form, setform] = useState({
+  const { login } = useGlobalContext();
+  const [form, setForm] = useState({
     username: "",
     password: "",
   });
@@ -18,11 +18,12 @@ const SignIn = () => {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      await loginUser(form);
-      console.log("User created successfully");
+      await login(form.username, form.password);
+      console.log("User logged in successfully");
       router.push("/home");
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error logging in:", error);
+      // Handle login error (e.g., show error message to user)
     } finally {
       setIsSubmitting(false);
     }
@@ -38,15 +39,16 @@ const SignIn = () => {
           <FormField
             title="Username"
             value={form.username}
-            handleChangeText={(e) => setform({ ...form, username: e })}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
             otherStyles="mt-7"
-            keyboardType="email-address"
+            keyboardType="default"
           />
           <FormField
             title="Password"
             value={form.password}
-            handleChangeText={(e) => setform({ ...form, password: e })}
+            handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
+            secureTextEntry
           />
           <CustomButton
             title="Sign In"
