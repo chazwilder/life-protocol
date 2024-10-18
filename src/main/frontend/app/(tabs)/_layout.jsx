@@ -1,19 +1,22 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { Image, View, Text } from "react-native";
+import { Image, Text, View } from "react-native";
 import { icons } from "../../constants";
 
 const TabIcon = ({ icon, name, color, focused }) => {
   return (
     <View className="items-center justify-center gap-2">
-      <Image 
-      source={icon}
-      resizeMode="contain"
-      tintColor={color}
-      className="w-8 h-8"
-
+      <Image
+        source={icon}
+        resizeMode="contain"
+        tintColor={color}
+        className="w-8 h-8"
       />
-      <Text className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}>
+      <Text
+        className={`${
+          focused ? "font-psemibold" : "font-pregular"
+        } text-xs text-white`}
+      >
         {name}
       </Text>
     </View>
@@ -24,13 +27,18 @@ const TabsLayout = () => {
   return (
     <>
       <Tabs
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarStyle: {
-          backgroundColor: "white",
-          paddingVertical: 20,
-        },
-      }}
+        screenOptions={{
+          tabBarActiveTintColor: "#FFA001",
+          tabBarInactiveTintColor: "#CDCDE0",
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            backgroundColor: "#161622",
+            borderTopWidth: 1,
+            borderTopColor: "#232533",
+            height: 84,
+            paddingVertical: 20,
+          },
+        }}
       >
         <Tabs.Screen
           name="home"
